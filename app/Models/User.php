@@ -5,12 +5,19 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, HasApiTokens;
+
+    /**
+     * Define the relationship to the Country model.
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +28,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'country_id',
+        'isActive',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
